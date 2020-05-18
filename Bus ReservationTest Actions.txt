@@ -1,0 +1,119 @@
+--------------------------------------------------------------------------------------------
+-------------------------------Test Actions from Postman------------------------------------
+--------------------------------------------------------------------------------------------
+
+Below are the individual test actions for the 3 bus services
+1.BusAdminService
+2.BusUserService
+3.BusPassengerService
+
+Follow the below steps to run our services 
+------------------------------------------
+Step-1 : Run Eureka server 
+
+Step-2 : Run Bus-Admin , Bus-User , Bus-Passenger Services 
+
+Step-3 : Go and verify from the Eureka server to see all the 3 services registerd or not ?(--> Loclahost:8761)
+
+Step-4: Run Zuul Api Gateway , Once it get successful run , Try to invoke the services ..!
+
+Once we integrate with Eureka and ZuulAPI .. You need to use the Zuul server prot -9090 for all the Actions
+---------------------------------------------------
+ EX(localhost:9090/api/Admin/insertBusRoute)
+ 
+ from browser --> 
+ 
+ http://localhost:9090/api/User/searchBus/Bangalore/Kochi
+ http://localhost:9090/api/Admin/getAllBusRoute
+ http://localhost:9090/api/Passenger/ticketView/1234
+ 
+--------------------------------------------------- 
+1. ==========> Bus Admin Service <=================
+
+1. Insert the bust route details
+POST : 
+
+ localhost:8981/api/Admin/insertBusRoute
+ 
+  {
+	 "routeNumber": 123
+	,"sourceCity": "Bangalore"
+	 ,"destinationCity": "Hyderabad"
+	 ,"status": "Ävailable"
+	
+}
+
+2. Update or save bus route details
+
+ localhost:8981/api/Admin/saveBusRoute
+ 
+ {
+	 "routeNumber": 300
+	,"sourceCity": "Bangalore"
+	 ,"destinationCity": "Kochi"
+	 ,"status": "Ävailable"
+	
+}
+
+
+
+GET:
+3. To View Bus route details based on route number
+
+localhost:8981/api/Admin/getBusRoute/300
+
+4. To view all the bus route 
+localhost:8981/api/Admin/getAllBusRoute
+
+DELETE: 
+
+5. Delete a saved information for bus routes 
+
+localhost:8981/api/Admin/deleteBusRoute/123
+
+---------------------------------------------------------------------------
+2. Bus User Service 
+---------------------------------------------------------------------------
+GET :
+
+localhost:8982/api/User/searchBus/Bangalore/Kochi
+
+---------------------------------------------------------------------------
+3. Bus Passenger Service
+---------------------------------------------------------------------------
+	
+//1. Save information by booking a ticket
+
+POST : 
+localhost:8983/api/Passenger/ticketSave
+{
+"ticketNumber":  1234
+,"name":  "Reddy"
+,"gender": "Male"
+,"age": 27
+,"seatNumber" : "C-7"
+,"mobileNumber": 8939056789
+,"emailId": "abc@gmail.com"
+,"couponCode": "Cx12Zyu"
+,"sourceCity": "Banglore"
+,"destiantionCity": "Kochi"
+
+}
+//2. View Saved information with ticket id
+
+GET: 
+localhost:8983/api/Passenger/ticketView/1234
+
+//3. Passenger Can only update  his mobile id
+PUT:
+localhost:8983/api/Passenger/ticketView/1234
+{
+"ticketNumber":  1234
+,"mobileNumber": 8939056719
+
+
+}
+
+//4. Passenger can cancel his ticket by deleting based on ticket number
+DELETE :
+localhost:8983/api/Passenger/ticketCancel/1234
